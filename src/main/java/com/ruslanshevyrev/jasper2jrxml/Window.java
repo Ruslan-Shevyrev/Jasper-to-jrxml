@@ -5,6 +5,7 @@
 package com.ruslanshevyrev.jasper2jrxml;
 
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -15,6 +16,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import net.sf.jasperreports.engine.JRException;
 
 /**
@@ -23,7 +25,8 @@ import net.sf.jasperreports.engine.JRException;
  */
 public class Window extends JFrame{
     String pathJasper;
-    String pathJRXML; 
+    String pathJRXML;
+    String fileName;
 
     public Window(){
    
@@ -32,20 +35,19 @@ public class Window extends JFrame{
        
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(500, 600);
+        frame.setSize(500, 200);
         frame.setResizable(false);
 
         JPanel panel = new JPanel();
 
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setLayout(new GridLayout(0,2));
 		
-	panel.add(Box.createVerticalGlue());
+	//panel.add(Box.createVerticalGlue());
 
 	final JLabel labelJasper = new JLabel("JASPER PATH");
 	//labelJasper.setAlignmentX(CENTER_ALIGNMENT);
-	panel.add(labelJasper);
 
-	panel.add(Box.createRigidArea(new Dimension(10, 10)));
+	//panel.add(Box.createRigidArea(new Dimension(10, 10)));
 
 	JButton buttonJasper = new JButton("choose JASPER file");
 
@@ -53,20 +55,23 @@ public class Window extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 			JFileChooser fileopen = new JFileChooser();
                         fileopen.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                        FileNameExtensionFilter filter = new FileNameExtensionFilter("JASPER", "JASPER");
+                        fileopen.removeChoosableFileFilter(fileopen.getFileFilter());
+                        fileopen.addChoosableFileFilter(filter);
+                        fileopen.setFileFilter(filter);
 			int ret = fileopen.showDialog(null, "Open File");				
 			if (ret == JFileChooser.APPROVE_OPTION) {
 				File file = fileopen.getSelectedFile();
 				labelJasper.setText(file.getPath());
+                                fileName = file.getName();
                                 pathJasper = file.getPath();
 			}
 		}
 	});
 
-	panel.add(buttonJasper);
 
 	final JLabel labelJRXML = new JLabel("JRXML PATH");
 	//labelJRXML.setAlignmentX(CENTER_ALIGNMENT);
-	panel.add(labelJRXML);
 
 	JButton buttonJRXML = new JButton("choose JRXML file");
 
@@ -77,13 +82,13 @@ public class Window extends JFrame{
 			int ret = fileopen.showDialog(null, "Open File");				
 			if (ret == JFileChooser.APPROVE_OPTION) {
 				File file = fileopen.getSelectedFile();
-				labelJRXML.setText(file.getPath());
+				labelJRXML.setText(file.getAbsolutePath());
                                 pathJRXML = file.getPath();
 			}
 		}
 	});
 
-	panel.add(buttonJRXML);
+	
 
 	JButton convert = new JButton("Convert JASPER to JRXML");
 
@@ -91,16 +96,19 @@ public class Window extends JFrame{
 		public void actionPerformed(ActionEvent e) {
                     ConvertJasper2JRXML convertJasper2JRXML = new ConvertJasper2JRXML();
                     try{
-                        convertJasper2JRXML.convert(pathJasper, pathJRXML);
+                        convertJasper2JRXML.convert(pathJasper, pathJRXML, fileName);
                     } catch(JRException ex){
 
                     }
 		}
 	});
 
+	panel.add(buttonJasper);
+	panel.add(labelJasper);
+        panel.add(buttonJRXML);
+	panel.add(labelJRXML);
 	panel.add(convert);
 
-	panel.add(Box.createVerticalGlue());
 	frame.getContentPane().add(panel);
         frame.setVisible(true);
     }

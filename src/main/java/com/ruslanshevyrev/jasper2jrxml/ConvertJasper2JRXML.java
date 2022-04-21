@@ -19,19 +19,19 @@ public class ConvertJasper2JRXML {
     public static String sourcePath, outputPath, xml;
     public static JasperDesign jd  = new JasperDesign(); 
 
-    public void convert(String JASPER, String JRXML) throws JRException{ 
+    public void convert(String JASPER, String JRXML, String FileName) throws JRException{ 
 
-      sourcePath = "C:\\1\\ACT_COMPL.JASPER";
+     // sourcePath = "C:\\1\\ACT_COMPL.JASPER";
 
-      sourcePath = JASPER;
+    //  sourcePath = JASPER;
  
-      outputPath = "C:\\1\\ACT_COMPL.jrxml";
+    //  outputPath = "C:\\1\\ACT_COMPL.jrxml";
 
-      outputPath = JRXML+ "\\ACT_COMPL.jrxml";
-      File file = new File(sourcePath);
+    //  outputPath = JRXML+ "\\ACT_COMPL.jrxml";
+      File file = new File(JASPER);
 
       JasperReport report = (JasperReport) JRLoader.loadObject(file);
-      JRXmlWriter.writeReport(report, outputPath, "UTF-8");
+      JRXmlWriter.writeReport(report, JRXML+File.separatorChar+"ACT_COMPL.jrxml", "UTF-8");
     }
     
 }
