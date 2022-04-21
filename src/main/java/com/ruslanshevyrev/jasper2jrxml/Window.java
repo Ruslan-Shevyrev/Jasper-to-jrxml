@@ -4,27 +4,70 @@
  */
 package com.ruslanshevyrev.jasper2jrxml;
 
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  *
  * @author Администратор
  */
 public class Window extends JFrame {
-
+        private JFileChooser fileChooser = null;
     public Window(){
-        super("My First Window"); //Заголовок окна
-        setBounds(100, 100, 200, 200); //Если не выставить 
-                                   //размер и положение 
-                                   //то окно будет мелкое и незаметное
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //это нужно для того чтобы при 
-                                                    //закрытии окна закрывалась и программа,
-                                                    //иначе она останется висеть в процессах
+        JFrame frame = new JFrame("jasper2jrxml");
+       
+        
+        frame.setLocationRelativeTo(null);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(500, 400);
+        frame.setVisible(true);
+        frame.setResizable(false);
+
+
+        JPanel panel = new JPanel();
+
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		
+	panel.add(Box.createVerticalGlue());
+
+	final JLabel label = new JLabel("JASPER PATH");
+		label.setAlignmentX(CENTER_ALIGNMENT);
+		panel.add(label);
+
+		panel.add(Box.createRigidArea(new Dimension(10, 10)));
+
+		JButton button = new JButton("choose JASPER file");
+		button.setAlignmentX(CENTER_ALIGNMENT);
+
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fileopen = new JFileChooser();				
+				int ret = fileopen.showDialog(null, "Открыть файл");				
+				if (ret == JFileChooser.APPROVE_OPTION) {
+					File file = fileopen.getSelectedFile();
+					label.setText(file.getPath());
+				}
+			}
+		});
+
+		panel.add(button);
+		panel.add(Box.createVerticalGlue());
+		frame.getContentPane().add(panel);
+       // Создание экземпляра JFileChooser 
+        fileChooser = new JFileChooser();
     }
 
     public static void main(String[] args) {
         Window app = new Window(); //Создаем экземпляр нашего приложения
-        app.setVisible(true); //С этого момента приложение запущено!
     }
     
 }
