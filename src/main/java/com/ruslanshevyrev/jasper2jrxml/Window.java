@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 public class Window extends JFrame {
 
     public Window(){
+
         super("My First Window"); //Заголовок окна
         setBounds(100, 100, 200, 200); //Если не выставить 
                                    //размер и положение 
