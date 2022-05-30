@@ -18,7 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import net.sf.jasperreports.engine.JRException;
-
+ 
 /**
  *
  * @author Администратор
