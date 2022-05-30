@@ -21,7 +21,7 @@ import net.sf.jasperreports.engine.JRException;
 
 /**
  *
- * @author Администратор1
+ * @author Администратор
  */
 public class Window extends JFrame{
     String pathJasper;
