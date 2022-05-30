@@ -18,10 +18,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import net.sf.jasperreports.engine.JRException;
- 
+
 /**
  *
- * @author Администратор
+ * @author Администратор1
  */
 public class Window extends JFrame{
     String pathJasper;
